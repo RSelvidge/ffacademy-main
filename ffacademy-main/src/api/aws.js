@@ -84,8 +84,10 @@ export const Auth = {
   async getSession() {
     if (!pool) return null;
     if (cachedSession && cachedSession.isValid()) return cachedSession;
+    const currentUser = pool.getCurrentUser();
+    if (!currentUser) return null;
     return new Promise((resolve) => {
-      pool.getCurrentUser()?.getSession((err, session) => {
+      currentUser.getSession((err, session) => {
         if (err || !session?.isValid()) {
           cachedSession = null;
           resolve(null);

@@ -89,7 +89,7 @@ Resources:
     Properties:
       CodeUri: src/profile
       Handler: index.handler
-      Runtime: nodejs20.x
+      Runtime: nodejs24.x
       Timeout: 10
       Environment:
         Variables:
@@ -116,7 +116,7 @@ Resources:
     Properties:
       CodeUri: src/connections
       Handler: index.handler
-      Runtime: nodejs20.x
+      Runtime: nodejs24.x
       Timeout: 10
       Environment:
         Variables:
@@ -155,7 +155,7 @@ Resources:
     Properties:
       CodeUri: src/validate-league
       Handler: index.handler
-      Runtime: nodejs20.x
+      Runtime: nodejs24.x
       Timeout: 30
       Environment:
         Variables:
@@ -166,7 +166,7 @@ Resources:
             - Effect: Allow
               Action:
                 - bedrock:InvokeModel
-              Resource: !Sub "arn:aws:bedrock:*:::foundation-model/${BedrockModelId}"
+              Resource: !Sub "arn:aws:bedrock:*::foundation-model/${BedrockModelId}"
       Events:
         ValidateLeague:
           Type: HttpApi
