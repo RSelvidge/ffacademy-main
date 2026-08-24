@@ -6,17 +6,13 @@ import {
   Trophy, 
   TrendingUp, 
   TrendingDown,
-  Clock,
   PlayCircle,
-  ChevronRight,
   Zap,
   Users,
-  Target,
-  AlertCircle
+  Target
 } from "lucide-react";
 import LiveMatchupCard from "../components/scoreboard/LiveMatchupCard";
 import PlayerPerformance from "../components/scoreboard/PlayerPerformance";
-import GameTracker from "../components/scoreboard/GameTracker";
 
 export default function Scoreboard() {
   const [selectedWeek, setSelectedWeek] = useState(14);

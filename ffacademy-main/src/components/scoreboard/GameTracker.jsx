@@ -1,6 +1,6 @@
 import React from "react";
 import { Badge } from "@/components/ui/badge";
-import { Clock, PlayCircle } from "lucide-react";
+import { PlayCircle } from "lucide-react";
 
 export default function GameTracker({ games }) {
   return (

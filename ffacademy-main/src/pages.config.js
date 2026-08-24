@@ -49,6 +49,7 @@
  */
 import Account from './pages/Account';
 import AccountLink from './pages/AccountLink';
+import Auth from './pages/Auth';
 import Connections from './pages/Connections';
 import Dashboard from './pages/Dashboard';
 import Home from './pages/Home';
@@ -64,6 +65,7 @@ import __Layout from './Layout.jsx';
 export const PAGES = {
     "Account": Account,
     "AccountLink": AccountLink,
+    "Auth": Auth,
     "Connections": Connections,
     "Dashboard": Dashboard,
     "Home": Home,

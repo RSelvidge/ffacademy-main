@@ -1,7 +1,7 @@
 
 import React, { useState, useEffect } from "react";
-import { User, LeagueConnection } from "@/entities/all";
-import { InvokeLLM } from "@/integrations/Core"; // Added InvokeLLM import
+import { User, LeagueConnection } from "@/api/aws";
+import { InvokeLLM } from "@/api/aws";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Badge } from "@/components/ui/badge";
@@ -170,6 +170,8 @@ export default function Connections() {
       `;
 
       const result = await InvokeLLM({
+        username: formData.username,
+        league_url: leagueUrl,
         prompt: scrapingPrompt,
         add_context_from_internet: true,
         response_json_schema: {
@@ -326,6 +328,8 @@ export default function Connections() {
       `;
 
       const result = await InvokeLLM({
+        username: formData.username,
+        league_url: leagueUrl,
         prompt: scrapingPrompt,
         add_context_from_internet: true, // Allow LLM to access the internet to scrape
         response_json_schema: {

@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { User } from "@/entities/User";
+import { User } from "@/api/aws";
 import { Button } from "@/components/ui/button";
 import { useNavigate } from "react-router-dom";
 import { createPageUrl } from "@/utils";

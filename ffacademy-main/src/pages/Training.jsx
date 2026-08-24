@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { TrainingModule, User } from "@/entities/all";
+import { TrainingModule, User } from "@/api/aws";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import {
