@@ -92,7 +92,7 @@ export default function Onboarding() {
           <div className="feature-card p-4 bg-pink-300 text-center transform rotate-1">
             <Zap className="w-8 h-8 mx-auto mb-2" />
             <h3 className="font-black text-lg">SIMULATE</h3>
-            <p className="font-bold text-sm">Real FF experience</p>
+            <p className="font-bold text-sm">Real fantasy football experience</p>
           </div>
         </div>
 

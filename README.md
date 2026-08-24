@@ -1,4 +1,4 @@
-# FF Master (Gridiron Guru)
+# Gridiron Guru
 
 Fantasy football training app. Originally built on Base44; now a self-contained static site
 (hosted on **GitHub Pages**) with an **AWS serverless backend** for accounts, profiles,

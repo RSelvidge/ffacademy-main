@@ -47,7 +47,7 @@ const AuthenticatedApp = () => {
   }
 
   // The login page is reachable without an account
-  if (!isAuthenticated && location.hash.replace('#/', '') !== 'Auth') {
+  if (!isAuthenticated && location.pathname !== '/Auth') {
     navigateToLogin();
     return null;
   }

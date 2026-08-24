@@ -6,8 +6,8 @@ export default function NavigationTracker() {
     const location = useLocation();
 
     useEffect(() => {
-        const pageName = location.pathname.replace(/^\//, '') || 'FF Master';
-        document.title = `FF Master${pageName && pageName !== 'FF Master' ? ` - ${pageName}` : ''}`;
+        const pageName = location.pathname.replace(/^\//, '') || 'Gridiron Guru';
+        document.title = `Gridiron Guru${pageName && pageName !== 'Gridiron Guru' ? ` - ${pageName}` : ''}`;
     }, [location]);
 
     return null;

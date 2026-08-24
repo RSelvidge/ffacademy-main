@@ -155,7 +155,7 @@ export default function Settings() {
             SETTINGS
           </h1>
           <p className="text-xl font-bold text-gray-600">
-            Customize your FF Master experience
+            Customize your Gridiron Guru experience
           </p>
         </div>
 
