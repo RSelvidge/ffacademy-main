@@ -43,7 +43,7 @@ export default function AuthPage() {
       <div className="w-full max-w-md">
         <div className="text-center mb-8">
           <h1 className="text-4xl font-black tracking-tight border-2 border-black bg-white inline-block px-4 py-2 shadow-[5px_5px_0px_#000] mb-4">
-            GRIDIRON GURU
+            FFACADEMY
           </h1>
           <p className="text-lg font-bold uppercase">Dominate Your League</p>
         </div>

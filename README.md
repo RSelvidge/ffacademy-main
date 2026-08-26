@@ -1,4 +1,4 @@
-# Gridiron Guru
+# FFAcademy
 
 Fantasy football training app. Originally built on Base44; now a self-contained static site
 (hosted on **GitHub Pages**) with an **AWS serverless backend** for accounts, profiles,
@@ -54,7 +54,7 @@ What gets created (pay-per-request, effectively $0 at hobby traffic):
    (`VITE_API_URL`, `VITE_COGNITO_USER_POOL_ID`, `VITE_COGNITO_CLIENT_ID`, `VITE_COGNITO_REGION`).
 3. Push to `main` — the workflow in `.github/workflows/deploy.yml` builds and publishes.
 
-Site URL: `https://rselvidge.github.io/ffacademy-main/`
+Site URL: `https://fantasyfootball.academy`
 
 ## Notes
 

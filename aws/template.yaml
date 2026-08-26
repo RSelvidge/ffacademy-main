@@ -1,12 +1,12 @@
 AWSTemplateFormatVersion: "2010-09-09"
 Transform: AWS::Serverless-2016-10-31
-Description: Gridiron Guru backend - DynamoDB + Cognito + API Gateway + Lambdas
+Description: FFAcademy backend - DynamoDB + Cognito + API Gateway + Lambdas
 
 Parameters:
   AllowedOrigin:
     Type: String
-    Default: "https://rselvidge.github.io"
-    Description: CORS origin allowed to call the API (your GitHub Pages URL)
+    Default: "https://fantasyfootball.academy"
+    Description: CORS origin allowed to call the API (your public site URL)
   BedrockModelId:
     Type: String
     Default: "anthropic.claude-3-5-haiku-20241022-v1:0"
@@ -70,7 +70,7 @@ Resources:
     Type: AWS::Serverless::HttpApi
     Properties:
       CorsConfiguration:
-        AllowOrigins: ["https://rselvidge.github.io", "http://localhost:5173"]
+        AllowOrigins: ["https://fantasyfootball.academy", "https://www.fantasyfootball.academy", "https://rselvidge.github.io", "http://localhost:5173"]
         AllowHeaders: ["authorization", "content-type"]
         AllowMethods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"]
         AllowCredentials: false

@@ -285,7 +285,7 @@ export default function Account() {
                   </div>
                   <div>
                     <h3 className="font-black">Account Created</h3>
-                    <p className="font-bold text-sm text-gray-600">Welcome to Gridiron Guru!</p>
+                    <p className="font-bold text-sm text-gray-600">Welcome to FFAcademy!</p>
                   </div>
                   <span className="ml-auto font-bold text-sm text-gray-500">1 week ago</span>
                 </div>

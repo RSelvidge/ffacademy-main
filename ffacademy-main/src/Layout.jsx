@@ -133,7 +133,7 @@ export default function Layout({ children, currentPageName }) {
         <div className="p-6 border-b-4 border-black bg-blue-500">
           <div className="flex items-center justify-between">
             <div>
-              <h1 className="text-2xl font-black text-white">GRIDIRON GURU</h1>
+              <h1 className="text-2xl font-black text-white">FFACADEMY</h1>
               <p className="text-blue-100 font-bold text-sm">DOMINATE YOUR LEAGUE</p>
             </div>
             <Button
@@ -195,7 +195,7 @@ export default function Layout({ children, currentPageName }) {
             >
               <Menu className="w-6 h-6" />
             </Button>
-            <h1 className="text-xl font-black">GRIDIRON GURU</h1>
+            <h1 className="text-xl font-black">FFACADEMY</h1>
             <div className="w-10"></div>
           </div>
         </div>
