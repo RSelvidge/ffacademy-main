@@ -30,7 +30,7 @@ jobs:
       - run: npm ci
       - run: npm run build
         env:
-          VITE_BASE_URL: /ffacademy-main/
+          VITE_BASE_URL: /
           # Optional: set these repository secrets after deploying the AWS backend
           VITE_API_URL: ${{ secrets.VITE_API_URL }}
           VITE_COGNITO_USER_POOL_ID: ${{ secrets.VITE_COGNITO_USER_POOL_ID }}
