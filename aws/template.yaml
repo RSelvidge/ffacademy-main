@@ -11,6 +11,51 @@ Parameters:
     Type: String
     Default: "anthropic.claude-3-5-haiku-20241022-v1:0"
     Description: Bedrock model used for league validation (falls back to mock data if unavailable)
+  CognitoDomainPrefix:
+    Type: String
+    Default: "ffacademy-auth"
+    Description: Globally-unique prefix for the Cognito hosted-UI domain (lowercase letters, digits, hyphens)
+  OAuthCallbackURLs:
+    Type: CommaDelimitedList
+    Default: "https://fantasyfootball.academy/,https://www.fantasyfootball.academy/,http://localhost:5173/"
+    Description: Exact URLs Cognito may redirect back to after social sign-in (must match the frontend origin + base path)
+  # Social identity providers. Leave a ClientId blank to skip creating that provider.
+  GoogleClientId:
+    Type: String
+    Default: ""
+    Description: Google OAuth client ID (from Google Cloud Console; authorized redirect URI is https://<CognitoDomainPrefix>.auth.<region>.amazoncognito.com/oauth2/idpresponse)
+  GoogleClientSecret:
+    Type: String
+    Default: ""
+    NoEcho: true
+    Description: Google OAuth client secret
+  MicrosoftClientId:
+    Type: String
+    Default: ""
+    Description: Microsoft Entra application (client) ID (redirect URI is the same /oauth2/idpresponse URL)
+  MicrosoftClientSecret:
+    Type: String
+    Default: ""
+    NoEcho: true
+    Description: Microsoft Entra client secret
+  MicrosoftTenantId:
+    Type: String
+    Default: "9188040d-6c67-4c5b-b112-36a304b66dad"
+    Description: Entra tenant GUID. Default is the "consumers" tenant (personal Microsoft accounts); use your own tenant GUID for org accounts. Must be a GUID, not an alias, so the OIDC issuer matches.
+  YahooClientId:
+    Type: String
+    Default: ""
+    Description: Yahoo OAuth client ID (from developer.yahoo.com; redirect URI is the same /oauth2/idpresponse URL)
+  YahooClientSecret:
+    Type: String
+    Default: ""
+    NoEcho: true
+    Description: Yahoo OAuth client secret
+
+Conditions:
+  HasGoogle: !Not [!Equals [!Ref GoogleClientId, ""]]
+  HasMicrosoft: !Not [!Equals [!Ref MicrosoftClientId, ""]]
+  HasYahoo: !Not [!Equals [!Ref YahooClientId, ""]]
 
 Resources:
   UsersTable:
@@ -55,6 +100,65 @@ Resources:
           RequireNumbers: false
           RequireSymbols: false
 
+  # Hosted-UI domain used for the social-login OAuth flow
+  UserPoolDomain:
+    Type: AWS::Cognito::UserPoolDomain
+    Properties:
+      UserPoolId: !Ref UserPool
+      Domain: !Ref CognitoDomainPrefix
+
+  GoogleIdentityProvider:
+    Type: AWS::Cognito::UserPoolIdentityProvider
+    Condition: HasGoogle
+    Properties:
+      UserPoolId: !Ref UserPool
+      ProviderName: Google
+      ProviderType: Google
+      ProviderDetails:
+        client_id: !Ref GoogleClientId
+        client_secret: !Ref GoogleClientSecret
+        authorize_scopes: "openid email profile"
+      AttributeMapping:
+        email: email
+        name: name
+        username: sub
+
+  MicrosoftIdentityProvider:
+    Type: AWS::Cognito::UserPoolIdentityProvider
+    Condition: HasMicrosoft
+    Properties:
+      UserPoolId: !Ref UserPool
+      ProviderName: Microsoft
+      ProviderType: OIDC
+      ProviderDetails:
+        client_id: !Ref MicrosoftClientId
+        client_secret: !Ref MicrosoftClientSecret
+        authorize_scopes: "openid email profile"
+        attributes_request_method: GET
+        oidc_issuer: !Sub "https://login.microsoftonline.com/${MicrosoftTenantId}/v2.0"
+      AttributeMapping:
+        email: email
+        name: name
+        username: sub
+
+  YahooIdentityProvider:
+    Type: AWS::Cognito::UserPoolIdentityProvider
+    Condition: HasYahoo
+    Properties:
+      UserPoolId: !Ref UserPool
+      ProviderName: Yahoo
+      ProviderType: OIDC
+      ProviderDetails:
+        client_id: !Ref YahooClientId
+        client_secret: !Ref YahooClientSecret
+        authorize_scopes: "openid email profile"
+        attributes_request_method: GET
+        oidc_issuer: "https://api.login.yahoo.com"
+      AttributeMapping:
+        email: email
+        name: name
+        username: sub
+
   UserPoolClient:
     Type: AWS::Cognito::UserPoolClient
     Properties:
@@ -65,6 +169,18 @@ Resources:
         - ALLOW_USER_SRP_AUTH
         - ALLOW_REFRESH_TOKEN_AUTH
       PreventUserExistenceErrors: ENABLED
+      AllowedOAuthFlowsUserPoolClient: true
+      AllowedOAuthFlows: [code]
+      AllowedOAuthScopes: [openid, email, profile]
+      CallbackURLs: !Ref OAuthCallbackURLs
+      LogoutURLs: !Ref OAuthCallbackURLs
+      # !Ref on an identity provider returns its ProviderName and also makes
+      # CloudFormation create the provider before this client.
+      SupportedIdentityProviders:
+        - COGNITO
+        - !If [HasGoogle, !Ref GoogleIdentityProvider, !Ref "AWS::NoValue"]
+        - !If [HasMicrosoft, !Ref MicrosoftIdentityProvider, !Ref "AWS::NoValue"]
+        - !If [HasYahoo, !Ref YahooIdentityProvider, !Ref "AWS::NoValue"]
 
   Api:
     Type: AWS::Serverless::HttpApi
@@ -188,3 +304,6 @@ Outputs:
   UserPoolRegion:
     Description: Cognito region (set as VITE_COGNITO_REGION)
     Value: !Ref AWS::Region
+  CognitoDomain:
+    Description: Hosted-UI domain for social sign-in (set as VITE_COGNITO_DOMAIN)
+    Value: !Sub "${CognitoDomainPrefix}.auth.${AWS::Region}.amazoncognito.com"

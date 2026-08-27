@@ -28,6 +28,8 @@ export const AuthProvider = ({ children }) => {
     }
 
     try {
+      // Finish a social-login redirect (Google/Microsoft/Yahoo) if one is pending
+      await Auth.completeFederatedSignIn();
       const session = await Auth.getSession();
       if (session) {
         const profile = await Auth.fetchProfile();

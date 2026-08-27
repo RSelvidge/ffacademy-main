@@ -36,6 +36,9 @@ jobs:
           VITE_COGNITO_USER_POOL_ID: ${{ secrets.VITE_COGNITO_USER_POOL_ID }}
           VITE_COGNITO_CLIENT_ID: ${{ secrets.VITE_COGNITO_CLIENT_ID }}
           VITE_COGNITO_REGION: ${{ secrets.VITE_COGNITO_REGION }}
+          # Optional: enables the Google/Microsoft/Yahoo sign-in buttons
+          VITE_COGNITO_DOMAIN: ${{ secrets.VITE_COGNITO_DOMAIN }}
+          VITE_OAUTH_PROVIDERS: ${{ secrets.VITE_OAUTH_PROVIDERS }}
       - uses: actions/upload-pages-artifact@v3
         with:
           path: ffacademy-main/dist
